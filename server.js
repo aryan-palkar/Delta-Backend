@@ -1,7 +1,23 @@
-const express = require('express')
-const app = express()
-const port = 3000
+require("dotenv").config();
 
-app.get('/', (req, res) => res.send('Hello Niyu!'))
+const express = require("express");
+const mongoose = require("mongoose");
+const Blog = require("./Schema/BlogSchema");
 
-app.listen(port, () => console.log(`Server listening on port ${port}!`))
+const app = express();
+const port = 3000;
+
+const db_user = process.env.MONGO_USERNAME;
+const db_password = process.env.MONGO_PASSWORD;
+
+const uri = `mongodb+srv://${db_user}:${db_password}@cluster0.bgv5jqs.mongodb.net/?retryWrites=true&w=majority`;
+
+mongoose.set('strictQuery', true);
+mongoose.connect(uri, 
+    () => console.log("Connected to MongoDB!"), 
+    (e) => console.log("Error connecting to MongoDB", e)
+);
+
+app.get("/", (req, res) => res.send("Hello Niyu!"));
+
+app.listen(port, () => console.log(`Server listening on port ${port}!`));
