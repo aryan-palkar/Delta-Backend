@@ -3,7 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const users = require("./Schema/UserSchema");
-const bcrypt= require("bcrypt")
+const bcrypt= require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 const port = 4000;
@@ -12,6 +13,8 @@ app.use(express.json());
 
 const db_user = process.env.MONGO_USERNAME;
 const db_password = process.env.MONGO_PASSWORD;
+const accessSecret = process.env.ACCESS_TOKEN_SECRET;
+const refreshSecret = process.env.REFRESH_TOKEN_SECRET;
 
 const uri = `mongodb+srv://${db_user}:${db_password}@cluster0.bgv5jqs.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -53,14 +56,29 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.post("/token", (req, res) => {
+  const refreshToken = req.body.token;
+  if (refreshToken == null) return res.sendStatus(401);
+  jwt.verify(refreshToken, refreshSecret, (err, user) => {
+    if (err) return res.sendStatus(403);
+    const accessToken = generateAccessToken({ user: user });
+    res.json({ accessToken: accessToken });
+  }
+  );
+});
+
 app.post("/login", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
   try {
-    const check = await users.find({ username });
-    if (check.length === 1 && (await bcrypt.compare(password,check[0].password)) ) {
-      res.send("success");
+    const user = await users.find({ username });
+    console.log({user : user[0]})
+    if (user.length !== 0 && (await bcrypt.compare(password,user[0].password)) ) {
+      const accessToken = generateAccessToken({user : user[0]});
+      const refreshToken = await jwt.sign({user : user[0]}, refreshSecret);
+
+      res.json({ accessToken: accessToken, refreshToken: refreshToken });
     } else {
       res.send("incorrect username or password");
     }
@@ -69,4 +87,9 @@ app.post("/login", async (req, res) => {
 
   }
 });
-app.listen(port);
+
+const generateAccessToken = (user) => {
+  return jwt.sign(user, accessSecret, { expiresIn: "15s" });
+};
+
+app.listen(port, () => console.log(`Server listening on port ${port}!`));
