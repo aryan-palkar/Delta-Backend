@@ -1,9 +1,10 @@
 POST http://localhost:3000/blog
 Content-Type: application/json
+Authorization: Bearer 
 
 {
-  "title": "Best",
-  "body": "ILoveBlogs"
+  "title": "New Blog",
+  "body": "Ni Bataunga"
 }
 
 ###
