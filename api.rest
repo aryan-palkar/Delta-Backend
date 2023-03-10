@@ -1,0 +1,10 @@
+POST http://localhost:3000/blog
+Content-Type: application/json
+
+{
+  "title": "Best",
+  "body": "ILoveBlogs"
+}
+
+###
+GET http://localhost:3000/blog
