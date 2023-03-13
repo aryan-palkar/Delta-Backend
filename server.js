@@ -6,9 +6,12 @@ const Blog = require("./Schema/BlogSchema");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 app.use(express.json());
+
+const cors = require('cors');
+app.use(cors());
 
 const db_user = process.env.MONGO_USERNAME;
 const db_password = process.env.MONGO_PASSWORD;

@@ -9,6 +9,9 @@ const jwt = require("jsonwebtoken");
 const app = express();
 const port = 4000;
 
+const cors = require('cors');
+app.use(cors());
+
 app.use(express.json());
 
 const db_user = process.env.MONGO_USERNAME;
@@ -34,7 +37,6 @@ app.post("/signup", async (req, res) => {
     req.body.username,
     req.body.password,
   ];
-
   const check = await users.find({ username: username });
   if (check.length != 0) {
     return res
