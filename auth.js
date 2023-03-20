@@ -5,14 +5,14 @@ const mongoose = require("mongoose");
 const users = require("./Schema/UserSchema");
 const bcrypt= require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cors = require('cors');
 
 const app = express();
 const port = 4000;
 
-const cors = require('cors');
-app.use(cors());
 
 app.use(express.json());
+app.use(cors());
 
 const db_user = process.env.MONGO_USERNAME;
 const db_password = process.env.MONGO_PASSWORD;
@@ -78,9 +78,11 @@ app.post("/login", async (req, res) => {
     console.log({user : user[0]})
     if (user.length !== 0 && (await bcrypt.compare(password,user[0].password)) ) {
       const accessToken = generateAccessToken({user : user[0]});
-      const refreshToken = await jwt.sign({user : user[0]}, refreshSecret);
+      // const refreshToken = await jwt.sign({user : user[0]}, refreshSecret);
 
-      res.json({ accessToken: accessToken, refreshToken: refreshToken });
+      // res.json({ accessToken: accessToken, refreshToken: refreshToken });
+      res.json({ accessToken: accessToken })
+
     } else {
       res.send("incorrect username or password");
     }
@@ -91,7 +93,7 @@ app.post("/login", async (req, res) => {
 });
 
 const generateAccessToken = (user) => {
-  return jwt.sign(user, accessSecret, { expiresIn: "15s" });
+  return jwt.sign(user, accessSecret, { expiresIn: "2m" });
 };
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

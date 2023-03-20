@@ -4,13 +4,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Blog = require("./Schema/BlogSchema");
 const jwt = require("jsonwebtoken");
+const cors = require('cors');
 
 const app = express();
 const port = 5000;
 
 app.use(express.json());
-
-const cors = require('cors');
 app.use(cors());
 
 const db_user = process.env.MONGO_USERNAME;
@@ -28,7 +27,9 @@ mongoose.connect(
 );
 
 const authenticateToken = (req, res, next) => {
+  // console.log(req.headers)
   const authHeader = req.headers["authorization"];
+  // console.log(authHeader)
   const token = authHeader && authHeader.split(" ")[1];
   if (token == null) return res.sendStatus(401);
 
