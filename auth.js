@@ -93,7 +93,7 @@ app.post("/login", async (req, res) => {
 });
 
 const generateAccessToken = (user) => {
-  return jwt.sign(user, accessSecret, { expiresIn: "2m" });
+  return jwt.sign(user, accessSecret, { expiresIn: "30m" });
 };
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

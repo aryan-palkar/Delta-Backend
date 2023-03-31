@@ -35,7 +35,7 @@ const authenticateToken = (req, res, next) => {
 
   jwt.verify(token, accessSecret, (err, user) => {
     if (err) return res.sendStatus(403);
-    req.user = user;
+    req.user = user.user;
     next();
   });
 }
@@ -58,6 +58,20 @@ app.post("/blog", authenticateToken, async (req, res) => {
   }
 });
 
+app.post("/like", authenticateToken, async (req, res) => {
+  const userId = req.user._id;
+  const blogId = req.body.blogId;
 
+  const blog = await Blog.find({_id : blogId});
+  console.log(blog)
+
+  if (!blog[0].likes.includes(userId)) {
+    blog[0].likes.push(userId);
+  }else{
+    blog[0].likes.splice(blog[0].likes.indexOf(userId), 1);
+  }
+  await blog[0].save();
+  res.send({"likes" : blog[0].likes.length});
+});
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

@@ -1,6 +1,6 @@
-POST http://localhost:3000/blog
+POST http://localhost:5000/blog
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0MThiMDM5NDViMWVkYjAyYmUwNzA2NyIsImVtYWlsIjoiYXJiIiwiZGlzcGxheU5hbWUiOiJheWIiLCJ1c2VybmFtZSI6Ik5peWF0aSIsInBhc3N3b3JkIjoiJDJiJDEwJE44MHZXamU1TVlGajhCS21lYVc0YnV0MVJUNDlUdjNtR2IzdEpFOFozZkJrb3VhQllhMEFhIiwiX192IjowfSwiaWF0IjoxNjc5NDg2MDkwLCJleHAiOjE2Nzk0ODc4OTB9.HtnUwJdAA-IzMLpM0Rdba6sMBs4qMPdjbnCQdDsy6Og
 
 {
   "title": "New Blog",
@@ -8,4 +8,22 @@ Authorization: Bearer
 }
 
 ###
-GET http://localhost:3000/blog
+GET http://localhost:5000/blog
+
+###
+POST http://localhost:5000/like
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0MThiMDM5NDViMWVkYjAyYmUwNzA2NyIsImVtYWlsIjoiYXJiIiwiZGlzcGxheU5hbWUiOiJheWIiLCJ1c2VybmFtZSI6Ik5peWF0aSIsInBhc3N3b3JkIjoiJDJiJDEwJE44MHZXamU1TVlGajhCS21lYVc0YnV0MVJUNDlUdjNtR2IzdEpFOFozZkJrb3VhQllhMEFhIiwiX192IjowfSwiaWF0IjoxNjc5NDg2MDkwLCJleHAiOjE2Nzk0ODc4OTB9.HtnUwJdAA-IzMLpM0Rdba6sMBs4qMPdjbnCQdDsy6Og
+
+{
+  "blogId": "641ae75855cecf90878c919a"
+}
+
+###
+POST http://localhost:5000/dislike
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0MThiMDM5NDViMWVkYjAyYmUwNzA2NyIsImVtYWlsIjoiYXJiIiwiZGlzcGxheU5hbWUiOiJheWIiLCJ1c2VybmFtZSI6Ik5peWF0aSIsInBhc3N3b3JkIjoiJDJiJDEwJE44MHZXamU1TVlGajhCS21lYVc0YnV0MVJUNDlUdjNtR2IzdEpFOFozZkJrb3VhQllhMEFhIiwiX192IjowfSwiaWF0IjoxNjc5NDg2MDkwLCJleHAiOjE2Nzk0ODc4OTB9.HtnUwJdAA-IzMLpM0Rdba6sMBs4qMPdjbnCQdDsy6Og
+
+{
+  "blogId": "641ae75855cecf90878c919a"
+}

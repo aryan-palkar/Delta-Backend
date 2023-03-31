@@ -9,7 +9,15 @@ const BlogSchema = mongoose.Schema(
         body: {
             type: String,
             required: true,
-        }
+        },
+        likes: {
+            type: Array,
+            default: [],
+        },
+        comments: {
+            type: Array,
+            default: [],
+        },
     }
 );
 
